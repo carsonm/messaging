@@ -1,33 +1,15 @@
-<h1>Listing messages</h1>
-
-<table>
-  <tr>
-    <th>Type</th>
-    <th>User</th>
-    <th>Full name</th>
-    <th>Content</th>
-    <th>Starred for</th>
-    <th>Hidden for</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @messages.each do |message| %>
-  <tr>
-    <td><%= message.type %></td>
-    <td><%= message.user_id %></td>
-    <td><%= message.full_name %></td>
-    <td><%= message.content %></td>
-    <td><%= message.starred_for %></td>
-    <td><%= message.hidden_for %></td>
-    <td><%= link_to 'Show', message %></td>
-    <td><%= link_to 'Edit', edit_message_path(message) %></td>
-    <td><%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
+<h1>Messages</h1>
+<div class="message_container">
+  <ul>
+    <% @messages.each do |message| %>
+      <li>
+        <%= message.full_name.split(' ')[0] %>
+        <%= message.content %>
+        <%= link_to 'Show', message %>
+        <%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<br>
 <%= link_to 'New Message', new_message_path %>

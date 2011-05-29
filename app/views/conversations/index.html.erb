@@ -1,4 +1,4 @@
-<h1>Conversations</h1>
+<h1><%= if params[:user] then User.find(params[:user]).name.split(' ')[0] + "'s" end %> Conversations</h1>
 
 <div class='conversation_container'>
   <ul>
@@ -28,7 +28,7 @@
       <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
       <span class='conversation_time'><%= distance_of_time_in_words(Time.now, last_message['created_at']) %></span>
       <br><%= last_message['content'] %>
-      <br><%= link_to 'Destroy', conversation, confirm: 'Are you sure?', method: :delete %>
+      <br><%= link_to 'View', message_path(conversation) %> <%= link_to 'Destroy', conversation, confirm: 'Are you sure?', method: :delete %>
     </li>
     <% end %>
   </ul>

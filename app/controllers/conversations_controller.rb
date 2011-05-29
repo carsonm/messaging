@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   # GET /conversations.json
   def index
     if params[:user]
-      @conversations = Conversation.all_in(users: [params[:user]])
+      @conversations = Conversation.all_in(users: [params[:user]]).order_by([:last_message, :desc])
     else
       @conversations = Conversation.all
     end

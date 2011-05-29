@@ -2,7 +2,11 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    if params[:conversation]
+      @messages = Message.where(conversation_id: params[:conversation]).order_by([:created_at, :desc])
+    else
+      @messages = Message.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +17,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    @message = Message.find(params[:id])
+    @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
 
     respond_to do |format|
       format.html # show.html.erb
