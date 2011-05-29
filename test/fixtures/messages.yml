@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  type: MyString
+  user_id: 1
+  full_name: MyString
+  content: MyText
+  starred_for: 
+  hidden_for: 
+
+two:
+  type: MyString
+  user_id: 1
+  full_name: MyString
+  content: MyText
+  starred_for: 
+  hidden_for: 

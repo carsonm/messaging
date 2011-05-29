@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  users: 
+  last_message: 
+  last_from_previous_user: 
+  group_id: 1
+
+two:
+  users: 
+  last_message: 
+  last_from_previous_user: 
+  group_id: 1

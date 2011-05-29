@@ -1,0 +1,29 @@
+<h1>Listing conversations</h1>
+
+<table>
+  <tr>
+    <th>Users</th>
+    <th>Last message</th>
+    <th>Last from previous user</th>
+    <th>Group</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @conversations.each do |conversation| %>
+  <tr>
+    <td><%= conversation.users %></td>
+    <td><%= conversation.last_message %></td>
+    <td><%= conversation.last_from_previous_user %></td>
+    <td><%= conversation.group_id %></td>
+    <td><%= link_to 'Show', conversation %></td>
+    <td><%= link_to 'Edit', edit_conversation_path(conversation) %></td>
+    <td><%= link_to 'Destroy', conversation, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Conversation', new_conversation_path %>
