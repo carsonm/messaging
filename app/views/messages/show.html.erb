@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @message.type %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @message.user_id %>
+</p>
+
+<p>
+  <b>Full name:</b>
+  <%= @message.full_name %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @message.content %>
+</p>
+
+<p>
+  <b>Starred for:</b>
+  <%= @message.starred_for %>
+</p>
+
+<p>
+  <b>Hidden for:</b>
+  <%= @message.hidden_for %>
+</p>
+
+
+<%= link_to 'Edit', edit_message_path(@message) %> |
+<%= link_to 'Back', messages_path %>
