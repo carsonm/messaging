@@ -56,9 +56,11 @@ class MessagesController < ApplicationController
       end
     end
 
-    @message = conversation.messages.new(params[:message])
-    @message.full_name = User.find(params[:message][:user_id]).name
+    @message = conversation.messages.new
     @message.type = "message"
+    @message.user_id = params[:message][:user_id]
+    @message.full_name = User.find(params[:message][:user_id]).name
+    @message.content = params[:message][:content]
 
     respond_to do |format|
       if @message.save

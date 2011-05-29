@@ -1,29 +1,35 @@
-<h1>Listing conversations</h1>
+<h1>Conversations</h1>
 
-<table>
-  <tr>
-    <th>Users</th>
-    <th>Last message</th>
-    <th>Last from previous user</th>
-    <th>Group</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class='conversation_container'>
+  <ul>
+    <% @conversations.each do |conversation| %>
+    <%
+      last_message = JSON.parse(conversation.last_message.to_json) unless !conversation.last_message
+      last_message_user_id = last_message['user_id'] unless !last_message
 
-<% @conversations.each do |conversation| %>
-  <tr>
-    <td><%= conversation.users %></td>
-    <td><%= conversation.last_message %></td>
-    <td><%= conversation.last_from_previous_user %></td>
-    <td><%= conversation.group_id %></td>
-    <td><%= link_to 'Show', conversation %></td>
-    <td><%= link_to 'Edit', edit_conversation_path(conversation) %></td>
-    <td><%= link_to 'Destroy', conversation, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+      conversation_users = Array.new(conversation.users)
+      conversation_users.delete(params[:user])
 
-<br />
+      if last_message_user_id == params[:user]
+        last_message = JSON.parse(conversation.last_from_previous_user.to_json) unless !conversation.last_from_previous_user
+      end
 
-<%= link_to 'New Conversation', new_conversation_path %>
+      if last_message
+        conversation_users.delete(last_message['user_id'])
+      end
+
+      conversation_names = Array.new
+      conversation_names << User.find(last_message['user_id']).name.split(' ')[0] unless last_message['user_id'] == params['user']
+      conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
+      conversation_names << 'me'
+
+    %>
+    <li>
+      <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
+      <span class='conversation_time'><%= distance_of_time_in_words(Time.now, last_message['created_at']) %></span>
+      <br><%= last_message['content'] %>
+      <br><%= link_to 'Destroy', conversation, confirm: 'Are you sure?', method: :delete %>
+    </li>
+    <% end %>
+  </ul>
+</div>
