@@ -1,8 +1,18 @@
 <h1>Messages</h1>
 <div class="message_container">
   <ul>
+    <%
+      conversation_user_ids = Array.new(Conversation.find(params[:id]).users)
+      puts conversation_user_ids.inspect
+      puts CURRENT_USER.inspect
+      conversation_user_ids.delete(CURRENT_USER.to_s)
+      conversation_names = Array.new
+      conversation_user_ids.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
+    %>
     <% @messages.each do |message| %>
       <li>
+        <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
+        <span class='conversation_time'><%= distance_of_time_in_words(Time.now, message.created_at) %></span>
         <%= message.full_name.split(' ')[0] %>
         <%= message.content %>
         <%= link_to 'Show', message %>

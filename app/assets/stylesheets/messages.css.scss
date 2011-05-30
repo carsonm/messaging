@@ -1,5 +1,32 @@
-/* 
+/*
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
   You can use Sass (SCSS) here: http://sass-lang.com/
 */
+.message_container {
+  background-color: #fdfdfd;
+  border-right: solid #eee 1px;
+  border-top: solid #eee 1px;
+
+  ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    background-color: #fdfdfd;
+  }
+
+  li {
+    padding: 5px;
+    border-bottom: solid #eee 1px;
+  }
+
+  span.conversation_name_list{
+    font-weight: bold;
+    color: #555;
+    float: left;
+  }
+
+  span.conversation_time{
+    float: right;
+  }
+}
