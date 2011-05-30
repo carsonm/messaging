@@ -18,6 +18,7 @@ class MessagesController < ApplicationController
   # GET /messages/1.json
   def show
     @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
+    @conversation_thread = ConversationThread.new(@messages)
 
     respond_to do |format|
       format.html # show.html.erb

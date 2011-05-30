@@ -1,4 +1,4 @@
-<h1><%= if params[:user] then User.find(params[:user]).name.split(' ')[0] + "'s" end %> Conversations</h1>
+<h1><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations</h1>
 
 <div class='conversation_container'>
   <ul>
@@ -8,9 +8,9 @@
       last_message_user_id = last_message['user_id'] unless !last_message
 
       conversation_users = Array.new(conversation.users)
-      conversation_users.delete(params[:user])
+      conversation_users.delete(CURRENT_USER.to_s)
 
-      if last_message_user_id == params[:user]
+      if last_message_user_id == CURRENT_USER.to_s
         last_message = JSON.parse(conversation.last_from_previous_user.to_json) unless !conversation.last_from_previous_user
       end
 
@@ -19,12 +19,12 @@
       end
 
       conversation_names = Array.new
-      conversation_names << User.find(last_message['user_id']).name.split(' ')[0] unless last_message['user_id'] == params['user']
+      conversation_names << User.find(last_message['user_id']).name.split(' ')[0] unless last_message['user_id'] == CURRENT_USER.to_s
       conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
       conversation_names << 'me'
 
     %>
-    <li>
+    <li>asdf
       <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
       <span class='conversation_time'><%= distance_of_time_in_words(Time.now, last_message['created_at']) %></span>
       <br><%= last_message['content'] %>
