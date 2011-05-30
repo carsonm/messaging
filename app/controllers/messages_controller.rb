@@ -18,7 +18,6 @@ class MessagesController < ApplicationController
   # GET /messages/1.json
   def show
     @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
-    @conversation_thread = ConversationThread.new(@messages)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -71,7 +70,7 @@ class MessagesController < ApplicationController
       if @message.save
         conversation.last_message = @message
         conversation.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
+        format.html { redirect_to message_path(conversation), notice: 'Message was successfully created.' }
         format.json { render json: @message, status: :created, location: @message }
       else
         format.html { render action: "new" }
