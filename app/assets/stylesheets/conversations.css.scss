@@ -3,12 +3,40 @@
   They will automatically be included in application.css.
   You can use Sass (SCSS) here: http://sass-lang.com/
 */
+
 .conversation_container {
-  background-color: #fdfdfd;
-  width: 375px;
+  width: 350px;
   border-right: solid #eee 1px;
   border-top: solid #eee 1px;
+  float: left;
 
+  ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    background-color: #fdfdfd;
+  }
+
+  li {
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: solid #eee 1px;
+  }
+
+  span.conversation_name_list{
+    font-weight: bold;
+    color: #555;
+    float: left;
+  }
+
+  span.conversation_time{
+    float: right;
+  }
+}
+
+.conversation_thread {
+  float: left;
+  width: 100%;
   ul {
     list-style-type: none;
     padding: 0px;
@@ -32,27 +60,14 @@
   }
 }
 
-#error_explanation {
-  width: 450px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
+.conversation_table {
+  width: 100%;
 
-  h2 {
-    text-align: left;
-    font-weight: bold;
-    padding: 5px 5px 5px 15px;
-    font-size: 12px;
-    margin: -7px;
-    margin-bottom: 0px;
-    background-color: #c00;
-    color: #fff;
+  .td_left {
+    width: 350px;
+    vertical-align: top;
   }
-
-  ul li {
-    font-size: 12px;
-    list-style: square;
+  .td_right {
+    vertical-align: top;
   }
 }

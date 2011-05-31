@@ -1,0 +1,30 @@
+<div class="message_container">
+  <ul>
+    <%
+      conversation_user_ids = Array.new(Conversation.find(params[:id]).users)
+      conversation_user_ids.delete(CURRENT_USER.to_s)
+      conversation_names = Hash.new
+      conversation_user_ids.each { |user_id| conversation_names[user_id] = User.find(user_id).name.split(' ')[0] }
+    %>
+    <% @messages.each do |message| %>
+      <%
+        to_conversation_names = Array.new
+        conversation_names.each{ |key, value| to_conversation_names << value.split[0] unless message.user_id == key}
+      %>
+      <li>
+        <span class='conversation_name_list'>
+          <% if message.user_id == CURRENT_USER.to_s %>
+            <%= message.full_name %> to <%= to_conversation_names.join(', ') %>
+          <% else %>
+            <%= message.full_name %> to me <% if to_conversation_names.count > 0 %> and <%= to_conversation_names.join(', ') %><% end %>
+          <% end %>
+        </span>
+        <span class='conversation_time'><%= distance_of_time_in_words(Time.now, message.created_at) %></span>
+        <br>
+        <%= message.content %>
+        <%= link_to 'Show', message %>
+        <%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+</div>

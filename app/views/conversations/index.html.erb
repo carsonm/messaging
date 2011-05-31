@@ -1,35 +1,48 @@
 <h1><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations</h1>
+<script>
 
-<div class='conversation_container'>
-  <ul>
-    <% @conversations.each do |conversation| %>
-    <%
-      last_message = JSON.parse(conversation.last_message.to_json) unless !conversation.last_message
-      last_message_user_id = last_message['user_id'] unless !last_message
+</script>
+<table class="conversation_table">
+  <tr>
+    <td class="td_left">
+      <div class='conversation_container'>
+        <ul>
+          <% @conversations.each do |conversation| %>
+          <%
+            last_message = JSON.parse(conversation.last_message.to_json) unless !conversation.last_message
+            last_message_user_id = last_message['user_id'] unless !last_message
 
-      conversation_users = Array.new(conversation.users)
-      conversation_users.delete(CURRENT_USER.to_s)
+            conversation_users = Array.new(conversation.users)
+            conversation_users.delete(CURRENT_USER.to_s)
 
-      if last_message_user_id == CURRENT_USER.to_s
-        last_message = JSON.parse(conversation.last_from_previous_user.to_json) unless !conversation.last_from_previous_user
-      end
+            if last_message_user_id == CURRENT_USER.to_s
+              last_message = JSON.parse(conversation.last_from_previous_user.to_json) unless !conversation.last_from_previous_user
+            end
 
-      if last_message
-        conversation_users.delete(last_message['user_id'])
-      end
+            if last_message
+              conversation_users.delete(last_message['user_id'])
+            end
 
-      conversation_names = Array.new
-      conversation_names << User.find(last_message['user_id']).name.split(' ')[0] unless last_message['user_id'] == CURRENT_USER.to_s
-      conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
-      conversation_names << 'me'
+            conversation_names = Array.new
+            conversation_names << User.find(last_message['user_id']).name.split(' ')[0] unless last_message['user_id'] == CURRENT_USER.to_s
+            conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
+            conversation_names << 'me'
 
-    %>
-    <li>asdf
-      <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
-      <span class='conversation_time'><%= distance_of_time_in_words(Time.now, last_message['created_at']) %></span>
-      <br><%= last_message['content'] %>
-      <br><%= link_to 'View', message_path(conversation) %> <%= link_to 'Destroy', conversation, confirm: 'Are you sure?', method: :delete %>
-    </li>
-    <% end %>
-  </ul>
-</div>
+          %>
+          <li onclick="$('.conversation_thread').load('<%= message_path(conversation) %>');">
+            <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
+            <span class='conversation_time'><%= distance_of_time_in_words(Time.now, last_message['created_at']) %></span>
+            <br><%= last_message['content'][0..140] + ((last_message['content'].length > 140) ? '...' : '') %>
+            <br><%= link_to 'Destroy', conversation, confirm: 'Are you sure?', method: :delete %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </td>
+    <td class="td_right">
+      <div class='conversation_thread'>
+
+      </div>
+    </td>
+  </tr>
+</table>

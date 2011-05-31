@@ -14,14 +14,22 @@ class MessagesController < ApplicationController
     end
   end
 
+  def get_data
+    respond_to do |format|
+      format.js { render :text => "true" }
+    end
+  end
+
   # GET /messages/1
   # GET /messages/1.json
   def show
     @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @message }
+      format.js {render :partial => "messages/conversation_thread", :layout => false, :status => :ok}
+      #if request.xhr?
+      #format.js {render :partial => "messages/conversation_thread", :layout => false, :status => "200 OK"}
+      #end
     end
   end
 
