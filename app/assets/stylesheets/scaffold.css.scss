@@ -1,9 +1,10 @@
-body { background-color: #fff; color: #333; }
+html, body { background-color: #fff; color: #333; height: 100%; }
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
+  margin: 0px;
 }
 
 pre {
@@ -12,7 +13,7 @@ pre {
   font-size: 11px;
 }
 
-a { 
+a {
   color: #000;
   &:visited { color: #666; }
   &:hover { color: #fff; background-color:#000; }
@@ -39,7 +40,7 @@ div.field, div.actions {
   padding-bottom: 0;
   margin-bottom: 20px;
   background-color: #f0f0f0;
-  
+
   h2 {
     text-align: left;
     font-weight: bold;
@@ -50,7 +51,7 @@ div.field, div.actions {
     background-color: #c00;
     color: #fff;
   }
-  
+
   ul li {
     font-size: 12px;
     list-style: square;

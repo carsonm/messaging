@@ -3,24 +3,35 @@
   They will automatically be included in application.css.
   You can use Sass (SCSS) here: http://sass-lang.com/
 */
-
 .conversation_container {
   width: 350px;
-  border-right: solid #eee 1px;
-  border-top: solid #eee 1px;
+  border-right: solid #bcb8b8 1px;
+  border-top: solid #bcb8b8 1px;
   float: left;
-
+  min-height: 100%;
+  padding: 0px;
+  margin: 0px;
   ul {
     list-style-type: none;
     padding: 0px;
     margin: 0px;
-    background-color: #fdfdfd;
+    background-color: #fff;
   }
 
   li {
     cursor: pointer;
-    padding: 5px;
-    border-bottom: solid #eee 1px;
+    border-bottom: solid #bcb8b8 1px;
+  }
+
+  .selected {
+    background-color: #efeeee;
+    border-shadow:5px;
+    border-shadow-fade:50%;
+  }
+
+  .li_shadow_1 {
+    padding-top: 1px;
+    background: #dedcdb;
   }
 
   span.conversation_name_list{
@@ -37,6 +48,9 @@
 .conversation_thread {
   float: left;
   width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
   ul {
     list-style-type: none;
     padding: 0px;
@@ -61,13 +75,27 @@
 }
 
 .conversation_table {
-  width: 100%;
-
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  .td_left_top {
+    height: 40px;
+    width: 350px;
+    vertical-align: top;
+    padding: 0px;
+    margin: 0px;
+  }
   .td_left {
     width: 350px;
     vertical-align: top;
+    padding: 0px;
+    margin: 0px;
   }
   .td_right {
+    background-color: #f5f5f5;
     vertical-align: top;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
   }
 }

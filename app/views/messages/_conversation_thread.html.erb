@@ -21,7 +21,7 @@
         </span>
         <span class='conversation_time'><%= distance_of_time_in_words(Time.now, message.created_at) %></span>
         <br>
-        <%= message.content %>
+        <%= message.content.gsub("\n", '<br>').html_safe %>
         <%= link_to 'Show', message %>
         <%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete %>
       </li>
