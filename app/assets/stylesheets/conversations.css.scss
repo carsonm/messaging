@@ -5,27 +5,29 @@
 */
 .conversation_container {
   width: 350px;
-  border-right: solid #bcb8b8 1px;
-  border-top: solid #bcb8b8 1px;
+  border-top: solid #b7babb 1px;
   float: left;
   min-height: 100%;
   padding: 0px;
   margin: 0px;
+
   ul {
     list-style-type: none;
     padding: 0px;
     margin: 0px;
-    background-color: #fff;
+    background-color: #fcfcfc;
   }
 
   li {
     cursor: pointer;
-    border-bottom: solid #bcb8b8 1px;
+    border-bottom: solid #b7babb 1px;
   }
 
   .not_selected {
     padding-top: 2px;
     padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .li_shadow_1 {
@@ -37,21 +39,23 @@
   .li_shadow_2 {
     padding-top: 1px;
     padding-bottom: 1px;
-    background: #e3e3e3;
+    background: #e4e4e4;
   }
 
   .li_background {
-    padding-top: 1px;
-    background: #eaeaea;
+    background: #ececec;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   span.conversation_name_list{
-    font-weight: bold;
+    font-weight: 600;
     color: #555;
     float: left;
   }
 
   span.conversation_time{
+    color: #4581c4;
     float: right;
   }
 }
@@ -62,6 +66,8 @@
   height: 100%;
   padding: 0px;
   margin: 0px;
+
+
   ul {
     list-style-type: none;
     padding: 0px;
@@ -81,6 +87,7 @@
   }
 
   span.conversation_time{
+    color: #4581c4;
     float: right;
   }
 }
@@ -89,9 +96,21 @@
   height: 100%;
   padding: 0px;
   margin: 0px;
+  border-collapse: collapse;
+
   .td_left_top {
     height: 40px;
     width: 350px;
+    vertical-align: top;
+    padding-left: 10px;
+    margin: 0px;
+  }
+  .td_left_nav {
+    .message_left_nav {
+      width: 60px;
+    }
+    width: 60px;
+    background-color: #393639;
     vertical-align: top;
     padding: 0px;
     margin: 0px;

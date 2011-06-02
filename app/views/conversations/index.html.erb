@@ -5,7 +5,8 @@
 </script>
 <table class="conversation_table">
   <tr>
-    <td class="td_left_top"><h1><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations</h1></td>
+    <td rowspan=2 class="td_left_nav"><div class='message_left_nav'>r</div></td>
+    <td class="td_left_top"><h2><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations</h2></td>
     <td>Inbox</td>
   </tr>
   <tr>
@@ -51,7 +52,6 @@
     </td>
     <td class="td_right">
       <div class='conversation_thread'>
-
       </div>
     </td>
   </tr>
