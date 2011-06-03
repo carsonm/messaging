@@ -6,7 +6,7 @@
 <table class="conversation_table">
   <tr>
     <td rowspan=2 class="td_left_nav"><div class='message_left_nav'>r</div></td>
-    <td class="td_left_top"><h2><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations <img src="/assets/messaging_compose.png" style="vertical-align:middle;" onclick="$('#reply_form_').toggle('fast');"></h2></td>
+    <td class="td_left_top"><h2><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations <img src="/assets/messaging_compose.png" style="vertical-align:middle;" onclick="loadNewMessageForm('<%= new_message_path %>');"></h2></td>
     <td>Inbox</td>
   </tr>
   <tr>

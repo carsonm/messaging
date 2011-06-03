@@ -76,8 +76,9 @@ class ConversationsController < ApplicationController
   # DELETE /conversations/1
   # DELETE /conversations/1.json
   def destroy
-    @conversation = Conversation.find(params[:id])
-    @conversation.destroy
+    puts params[:id]
+    @conversation = Conversation.find(params[:conversation_id])
+    #@conversation.destroy
 
     respond_to do |format|
       format.html { redirect_to conversations_url }
