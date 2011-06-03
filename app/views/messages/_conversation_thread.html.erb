@@ -11,32 +11,7 @@
         to_conversation_names = Array.new
         conversation_names.each{ |key, value| to_conversation_names << value.split[0] unless message.user_id == key}
       %>
-      <li>
-        <div id="reply_form_<%= message._id.to_s %>" class="reply_form">
-          <%= form_tag(message_path, :id => 'user-wallpost-', :class => 'comment', :remote => true) do %>
-            <div class="field">
-              <%= text_area_tag :content %>
-            </div>
-            <div class="actions">
-              <%= submit_tag %>
-            </div>
-          <% end %>
-        </div>
-        <span class='conversation_name_list'>
-          <% if message.user_id == CURRENT_USER.to_s %>
-            <%= message.full_name %> to <%= to_conversation_names.join(', ') %>
-          <% else %>
-            <%= message.full_name %> to me <% if to_conversation_names.count > 0 %> and <%= to_conversation_names.join(', ') %><% end %>
-          <% end %>
-        </span>
-        <span class='conversation_time'><span><%= distance_of_time_in_words(Time.now, message.created_at) %></span> &nbsp; <img src="/assets/messaging_reply.png" style="vertical-align:middle;" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');"></span>
-        <br>
-        <div id="message_content_<%= message.conversation_id.to_s %>" class="message_content">
-          <%= message.content.gsub("\n", '<br>').html_safe %>
-          <%= link_to 'Show', message %>
-          <%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete %>
-        </div>
-      </li>
+      <%= render message, :to_conversation_names => to_conversation_names %>
     <% end %>
   </ul>
 </div>

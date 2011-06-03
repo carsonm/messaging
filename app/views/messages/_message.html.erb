@@ -1,0 +1,29 @@
+<li id="message_li_<%= message._id.to_s %>" class="message_li">
+  <div id="reply_form_<%= message._id.to_s %>" class="reply_form">
+    <%= form_tag(reply_path, :id => params[:id], :remote => true) do %>
+      <%= hidden_field_tag 'conversation_id', params[:id] %>
+      <div class="field">
+        <%= text_area_tag :content %>
+      </div>
+      <div class="actions">
+        <a href="#" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');">cancel</a>
+        <%= submit_tag 'Send' %>
+      </div>
+    <% end %>
+  </div>
+  <span class='conversation_name_list' onclick="$('#message_content_<%= message._id.to_s %>').toggle('fast');">
+    <% if message.user_id == CURRENT_USER.to_s %>
+      <%= message.full_name %> to <%= to_conversation_names.join(', ') %>
+    <% else %>
+      <%= message.full_name %> to me <% if to_conversation_names.count > 0 %> and <%= to_conversation_names.join(', ') %><% end %>
+    <% end %>
+    <span class='conversation_time'><span><%= distance_of_time_in_words(Time.now, message.created_at) %></span> &nbsp; <img src="/assets/messaging_reply.png" style="vertical-align:middle;" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');"></span>
+  </span>
+  <br>
+  <div id="message_content_<%= message._id.to_s %>" class="message_content">
+    <%= message.content.gsub("\n", '<br>').html_safe %>
+    <br><br>
+    <%= link_to 'Show', message %>
+    <%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete, remote: :true %>
+  </div>
+</li>

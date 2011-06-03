@@ -87,6 +87,33 @@ class MessagesController < ApplicationController
     end
   end
 
+  def reply
+    conversation = Conversation.find(params[:conversation_id])
+
+    last_message_user_id = JSON.parse(conversation.last_message.to_json)['user_id']
+    if last_message_user_id != CURRENT_USER.to_s
+      conversation.last_from_previous_user = conversation.last_message
+    end
+
+
+    @message = conversation.messages.new
+    @message.type = "message"
+    @message.user_id = CURRENT_USER.to_s
+    @message.full_name = User.find(CURRENT_USER.to_s).name
+    @message.content = params[:content]
+
+    respond_to do |format|
+      if @message.save
+        conversation.last_message = @message
+        conversation.save
+        format.js { render :template => 'messages/create' }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @message.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # PUT /messages/1
   # PUT /messages/1.json
   def update
@@ -112,6 +139,7 @@ class MessagesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to messages_url }
       format.json { head :ok }
+      format.js { render :template => 'messages/delete' }
     end
   end
 end

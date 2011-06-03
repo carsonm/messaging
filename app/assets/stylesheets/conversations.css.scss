@@ -67,6 +67,12 @@
   padding: 0px;
   margin: 0px;
 
+  .message_container {
+    background-color: #fdfdfd;
+    border-top: solid #b7babb 1px;
+    border-left: solid #b7babb 1px;
+    height: 100%;
+  }
 
   ul {
     list-style-type: none;
@@ -75,15 +81,35 @@
     background-color: #fdfdfd;
   }
 
+
   li {
-    padding: 5px;
-    border-bottom: solid #eee 1px;
+    padding: 4px 15px 15px;
+    border-bottom: solid #b7babb 1px;
+    .message_content{
+      display: none;
+    }
+  }
+  li:hover { background: #f5f5f5; }
+  .reply_form{
+    display: none;
+
+    textarea {
+        width: 98%;
+        height: 75px;
+        border: 1px solid #b7babb;
+        padding: 5px;
+        margin: 3px;
+        overflow:hidden;
+        font-family: Georgia, serif;
+        font-color: #333;
+    }
   }
 
   span.conversation_name_list{
     font-weight: bold;
     color: #555;
     float: left;
+    width: 100%;
   }
 
   span.conversation_time{

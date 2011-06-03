@@ -6,7 +6,7 @@
 <table class="conversation_table">
   <tr>
     <td rowspan=2 class="td_left_nav"><div class='message_left_nav'>r</div></td>
-    <td class="td_left_top"><h2><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations</h2></td>
+    <td class="td_left_top"><h2><%= User.find(CURRENT_USER.to_s).name.split(' ')[0] + "'s" %> Conversations <img src="/assets/messaging_compose.png" style="vertical-align:middle;" onclick="$('#reply_form_').toggle('fast');"></h2></td>
     <td>Inbox</td>
   </tr>
   <tr>
@@ -34,7 +34,7 @@
             conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
             conversation_names << 'me'
           %>
-          <li class='not_selected' id='<%= conversation._id.to_s %>' onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>');">
+          <li class='not_selected' id='conversation_li_<%= conversation._id.to_s %>' onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>');">
             <div id="<%= conversation._id.to_s %>li_shadow_1">
             <div id="<%= conversation._id.to_s %>li_shadow_2">
             <div id="<%= conversation._id.to_s %>li_background">
