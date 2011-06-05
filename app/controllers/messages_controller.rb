@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     if params[:conversation]
-      @messages = Message.where(conversation_id: params[:conversation]).order_by([:created_at, :desc])
+      @messages = Message.not_in(hidden_for: [CURRENT_USER.to_s]).where(conversation_id: params[:conversation]).order_by([:created_at, :desc])
     else
       @messages = Message.all
     end
@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
+    @messages = Message.not_in(hidden_for: [CURRENT_USER.to_s]).where(conversation_id: params[:id]).order_by([:created_at, :desc])
 
     respond_to do |format|
       format.js {render :partial => "messages/conversation_thread", :layout => false, :status => :ok}
@@ -53,7 +53,7 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     user_ids = params[:message][:user_ids_to]
-    user_ids << params[:message][:user_id]
+    user_ids << CURRENT_USER.to_s
 
     conversations = Conversation.where(:users.size => user_ids.count, :users.all => user_ids)
 
@@ -63,15 +63,15 @@ class MessagesController < ApplicationController
     else
       conversation = conversations[0]
       last_message_user_id = JSON.parse(conversation.last_message.to_json)['user_id']
-      if last_message_user_id != params[:message][:user_id]
+      if last_message_user_id != CURRENT_USER.to_s
         conversation.last_from_previous_user = conversation.last_message
       end
     end
 
     @message = conversation.messages.new
     @message.type = "message"
-    @message.user_id = params[:message][:user_id]
-    @message.full_name = User.find(params[:message][:user_id]).name
+    @message.user_id = CURRENT_USER.to_s
+    @message.full_name = User.find(CURRENT_USER.to_s).name
     @message.content = params[:message][:content]
 
     respond_to do |format|
@@ -134,7 +134,15 @@ class MessagesController < ApplicationController
   # DELETE /messages/1.json
   def destroy
     @message = Message.find(params[:id])
-    @message.destroy
+    puts @message.inspect
+
+    #DO THIS ON ONE LINE
+    if @message.hidden_for != nil
+      @message.hidden_for << CURRENT_USER.to_s unless @message.hidden_for.include?(CURRENT_USER.to_s)
+    else
+      @message.hidden_for = Array.new([CURRENT_USER.to_s])
+    end
+    @message.save
 
     respond_to do |format|
       format.html { redirect_to messages_url }

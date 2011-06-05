@@ -14,9 +14,9 @@ $(document).bind 'keydown', (e) ->
         url: "/conversations/destroy",
         data: "conversation_id=" + conversation_id
       });
+$
 
-
-`loadConversationThread = function(messagePath) {
+`loadConversationThread = function(messagePath, conversationID) {
      $('.conversation_thread').load(messagePath, function(){
        $('.message_container ul li:first .message_content').show();
      });
@@ -34,9 +34,11 @@ $(document).bind 'keydown', (e) ->
      $('#' + conversationID + 'li_background').toggleClass('li_background');
    };`
 
-`loadNewMessageForm = function(messagePath, conversationID) {
+`loadNewMessageForm = function(messagePath) {
      //$('.conversation_thread').load(messagePath, function(){
      //  $('.message_container ul li:first .message_content').show();
      //});
-     alert('asdfasdfasdf');
+     $('.conversation_thread').load(messagePath, function(){
+       //$('.message_container ul li:first .message_content').show();
+     });
    };`

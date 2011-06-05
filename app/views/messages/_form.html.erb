@@ -11,22 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    From<br />
-    <%= f.collection_select :user_id, User.all, :id, :name %>
-  </div>
-   <div class="field">
-    To<br />
+   <div class="to_field">
+    To:
     <% for user in User.all %>
       <%= check_box_tag "message[user_ids_to][]", user.id, false %>
       <%= user.name %>
     <% end %>
   </div>
-  <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_area :content %>
+  <div class="tiny_mce_controls">
+    Tiny MCE controls go here ..... . ............................... ............ ..............
   </div>
-  <div class="actions">
+  <div class="content_field">
+    <%= f.text_area :content, :class => 'tinymce' %>
+    <br>
     <%= f.submit %>
   </div>
 <% end %>
