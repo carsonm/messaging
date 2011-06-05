@@ -23,7 +23,6 @@
   <div id="message_content_<%= message._id.to_s %>" class="message_content">
     <%= message.content.gsub("\n", '<br>').html_safe %>
     <br><br>
-    <%= link_to 'Show', message %>
-    <%= link_to 'Destroy', message, confirm: 'Are you sure?', method: :delete, remote: :true %>
+    <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true %>
   </div>
 </li>

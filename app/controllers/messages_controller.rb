@@ -23,7 +23,11 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    @messages = Message.not_in(hidden_for: [CURRENT_USER.to_s]).where(conversation_id: params[:id]).order_by([:created_at, :desc])
+    if params[:hidden] == "true"
+      @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
+    else
+      @messages = Message.not_in(hidden_for: [CURRENT_USER.to_s]).where(conversation_id: params[:id]).order_by([:created_at, :desc])
+    end
 
     respond_to do |format|
       format.js {render :partial => "messages/conversation_thread", :layout => false, :status => :ok}
@@ -134,7 +138,6 @@ class MessagesController < ApplicationController
   # DELETE /messages/1.json
   def destroy
     @message = Message.find(params[:id])
-    puts @message.inspect
 
     #DO THIS ON ONE LINE
     if @message.hidden_for != nil

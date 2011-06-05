@@ -3,7 +3,11 @@ class ConversationsController < ApplicationController
   # GET /conversations.json
   def index
     if CURRENT_USER
-      @conversations = Conversation.all_in(users: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
+      if params[:deleted] == "true"
+        @conversations = Conversation.all_in(hidden_for: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
+      else
+        @conversations = Conversation.all_in(users: [CURRENT_USER.to_s]).not_in(hidden_for: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
+      end
     else
       @conversations = Conversation.all
     end
@@ -76,9 +80,15 @@ class ConversationsController < ApplicationController
   # DELETE /conversations/1
   # DELETE /conversations/1.json
   def destroy
-    puts params[:id]
     @conversation = Conversation.find(params[:conversation_id])
-    #@conversation.destroy
+
+    #DO THIS ON ONE LINE
+    if @conversation.hidden_for != nil
+      @conversation.hidden_for << CURRENT_USER.to_s unless @conversation.hidden_for.include?(CURRENT_USER.to_s)
+    else
+      @conversation.hidden_for = Array.new([CURRENT_USER.to_s])
+    end
+    @conversation.save
 
     respond_to do |format|
       format.html { redirect_to conversations_url }

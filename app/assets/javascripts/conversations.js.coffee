@@ -17,6 +17,7 @@ $(document).bind 'keydown', (e) ->
 $
 
 `loadConversationThread = function(messagePath, conversationID) {
+     console.log(messagePath);
      $('.conversation_thread').load(messagePath, function(){
        $('.message_container ul li:first .message_content').show();
      });
