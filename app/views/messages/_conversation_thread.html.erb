@@ -11,23 +11,7 @@
         to_conversation_names = Array.new
         conversation_names.each{ |key, value| to_conversation_names << value.split[0] unless message.user_id == key}
       %>
-      <% if i == 0 %>
-        <li class='message_li' onclick="loadConversationThread('<%= message_path(message.conversation_id) %>' + '?hidden=true', '<%= message.conversation_id.to_s %>');">
-          Show All
-        </li>
-      <% end %>
       <%= render message, :to_conversation_names => to_conversation_names %>
     <% end %>
   </ul>
 </div>
-<!--
-=form_tag user_wallpost_comments_path, :id => 'user-wallpost-' + user_wallpost.id.to_s + '-comment-form', :class => 'comment', :remote => true do
-      =hidden_field_tag 'user_wallpost_id', user_wallpost.id
-      =image_tag(current_user.avatar(:tiny), :width => "32", :height => "32")
-      %div
-        = text_area_tag 'comment', nil, :size => "50x3", :maxlength => "255", :id => 'user-wallpost-' + user_wallpost.id.to_s + '-comment-box'
-        %p
-          %span.remainingCharacterNumber 255 characters remaining
-          = submit_tag 'Comment'
-        %p.errorMessage{ :id => "user-wallpost-#{user_wallpost.id}-comment-error"}
--->

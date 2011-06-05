@@ -23,11 +23,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    if params[:hidden] == "true"
-      @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
-    else
-      @messages = Message.not_in(hidden_for: [CURRENT_USER.to_s]).where(conversation_id: params[:id]).order_by([:created_at, :desc])
-    end
+    @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
 
     respond_to do |format|
       format.js {render :partial => "messages/conversation_thread", :layout => false, :status => :ok}
