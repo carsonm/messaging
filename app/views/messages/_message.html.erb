@@ -1,4 +1,8 @@
-<li id="message_li_<%= message._id.to_s %>" class="message_li">
+<% if message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s) %>
+  <li id="message_li_<%= message._id.to_s %>" class="hidden_message_li">
+<% else %>
+  <li id="message_li_<%= message._id.to_s %>" class="message_li">
+<% end %>
   <div id="reply_form_<%= message._id.to_s %>" class="reply_form">
     <%= form_tag(reply_path, :id => params[:id], :remote => true) do %>
       <%= hidden_field_tag 'conversation_id', params[:id] %>

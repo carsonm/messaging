@@ -139,7 +139,6 @@
     background-color: #fdfdfd;
   }
 
-
   li {
     padding: 4px 15px 15px;
     border-bottom: solid #b7babb 1px;
@@ -161,6 +160,10 @@
         font-family: Georgia, serif;
         font-color: #333;
     }
+  }
+
+  .hidden_message_li{
+    display: none;
   }
 
   span.conversation_name_list{
