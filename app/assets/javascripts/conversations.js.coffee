@@ -3,18 +3,23 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-$(document).bind 'keydown', (e) ->
-  if e.keyCode == 8 || e.keyCode == 46
-    conversation_id = $('.conversation_container ul .selected').attr('id').replace('conversation_li_', '')
-    if confirm 'Are you sure you want to delete this message?'
-      $('.conversation_container ul .selected').remove()
-      $('.message_container').remove()
-      $.ajax({
-        type: "DELETE",
-        url: "/conversations/destroy",
-        data: "conversation_id=" + conversation_id
-      });
-$
+  $('#hidden_message_link').bind 'click', (event) =>
+    $('.message_container ul li').show()
+
+  $(document).bind 'keydown', (e) ->
+    if e.keyCode == 8 || e.keyCode == 46
+      conversation_id = $('.conversation_container ul .selected').attr('id').replace('conversation_li_', '')
+      if confirm 'Are you sure you want to delete this message?'
+        $('.conversation_container ul .selected').remove()
+        $('.message_container').remove()
+        $.ajax({
+          type: "DELETE",
+          url: "/conversations/destroy",
+          data: "conversation_id=" + conversation_id
+        });
+
+$('#hidden_message_link').bind 'click', (e) ->
+  alert 'asdfasdf';
 
 `loadConversationThread = function(messagePath, conversationID) {
      console.log(messagePath);
