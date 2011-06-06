@@ -3,8 +3,19 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-  $('#hidden_message_link').bind 'click', (event) =>
-    $('.message_container ul li').show()
+  $('#hidden_message').bind 'click', (event) ->
+    if $('#hidden_message').attr("alt") == "Show Hidden Messages"
+      $('.message_container .hidden_message_li').show()
+      $('#hidden_message').attr("alt", "Hide Hidden Messages")
+    else
+      $('.message_container .hidden_message_li').hide()
+      $('#hidden_message').attr("alt", "Show Hidden Messages")
+
+  $('#expand_messages').bind 'click', (event) ->
+      $('.message_content').show()
+
+  $('#collapse_messages').bind 'click', (event) ->
+      $('.message_content').hide()
 
   $(document).bind 'keydown', (e) ->
     if e.keyCode == 8 || e.keyCode == 46
@@ -18,13 +29,10 @@ $ ->
           data: "conversation_id=" + conversation_id
         });
 
-$('#hidden_message_link').bind 'click', (e) ->
-  alert 'asdfasdf';
-
 `loadConversationThread = function(messagePath, conversationID) {
      console.log(messagePath);
      $('.conversation_thread').load(messagePath, function(){
-       $('.message_container ul li:first .message_content').show();
+       $('.message_container ul .message_li:first .message_content').show();
      });
 
      $('.conversation_container li').removeClass('selected');
@@ -47,4 +55,22 @@ $('#hidden_message_link').bind 'click', (e) ->
      $('.conversation_thread').load(messagePath, function(){
        //$('.message_container ul li:first .message_content').show();
      });
+   };`
+
+`starIt = function(messageID) {
+     $('#message_li_' + messageID + ' #message_header #star img').attr('src', 'assets/messaging_starred.png')
+     $.ajax({
+          type: "POST",
+          url: "/messages/star",
+          data: "id=" + messageID
+        });
+   };`
+
+`unStarIt = function(messageID) {
+     $('#message_li_' + messageID + ' #message_header #star img').attr('src', 'assets/messaging_unstarred.png')
+     $.ajax({
+          type: "POST",
+          url: "/messages/unstar",
+          data: "id=" + messageID
+        });
    };`

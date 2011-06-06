@@ -87,6 +87,36 @@ class MessagesController < ApplicationController
     end
   end
 
+  def star
+    @message = Message.find(params[:id])
+
+    #DO THIS ON ONE LINE
+    if @message.starred_for != nil
+      @message.starred_for << CURRENT_USER.to_s unless @message.starred_for.include?(CURRENT_USER.to_s)
+    else
+      @message.starred_for = Array.new([CURRENT_USER.to_s])
+    end
+    @message.save
+
+    respond_to do |format|
+      format.js { render :text => "true" }
+    end
+  end
+
+  def unstar
+    @message = Message.find(params[:id])
+
+    if @message.starred_for && @message.starred_for.include?(CURRENT_USER.to_s)
+      @message.starred_for.delete(CURRENT_USER.to_s)
+    end
+
+    @message.save
+
+    respond_to do |format|
+      format.js { render :text => "true" }
+    end
+  end
+
   def reply
     conversation = Conversation.find(params[:conversation_id])
 

@@ -15,15 +15,29 @@
       </div>
     <% end %>
   </div>
-  <span class='conversation_name_list' onclick="$('#message_content_<%= message._id.to_s %>').toggle('fast');">
-    <% if message.user_id == CURRENT_USER.to_s %>
-      <%= message.full_name %> to <%= to_conversation_names.join(', ') %>
-    <% else %>
-      <%= message.full_name %> to me <% if to_conversation_names.count > 0 %> and <%= to_conversation_names.join(', ') %><% end %>
-    <% end %>
-    <span class='conversation_time'><span><%= distance_of_time_in_words(Time.now, message.created_at) %></span> &nbsp; <img src="/assets/messaging_reply.png" style="vertical-align:middle;" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');"></span>
-  </span>
-  <br>
+
+
+
+  <div id="message_header">
+    <div id="star">
+      <% if message.starred_for && message.starred_for.include?(CURRENT_USER.to_s) %>
+        <img src="assets/messaging_starred.png" onclick="unStarIt('<%= message._id.to_s %>');">
+      <% else %>
+        <img src="assets/messaging_unstarred.png" onclick="starIt('<%= message._id.to_s %>');">
+      <% end %>
+    </div>
+    <div class='conversation_name_list' onclick="$('#message_content_<%= message._id.to_s %>').toggle();">
+      <% if message.user_id == CURRENT_USER.to_s %>
+        <%= message.full_name %> to <%= to_conversation_names.join(', ') %>
+      <% else %>
+        <%= message.full_name %> to me <% if to_conversation_names.count > 0 %> and <%= to_conversation_names.join(', ') %><% end %>
+      <% end %>
+      <div class='conversation_time'>
+        <div class="time"><%= distance_of_time_in_words(Time.now, message.created_at) %> &nbsp; &nbsp;</div>
+        <div class="reply"><img src="/assets/messaging_reply.png" style="vertical-align:middle;" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');"></div>
+      </div>
+    </div>
+  </div>
   <div id="message_content_<%= message._id.to_s %>" class="message_content">
     <%= message.content.gsub("\n", '<br>').html_safe %>
     <br><br>

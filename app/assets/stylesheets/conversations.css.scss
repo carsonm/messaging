@@ -60,6 +60,35 @@
   }
 }
 
+
+#message_header{
+  width: 100%;
+
+  #star{
+    float: left;
+    padding-right: 5px;
+  }
+
+  .conversation_name_list{
+    font-weight: bold;
+    color: #555;
+    width: 100%;
+  }
+
+  .conversation_time{
+    color: #4581c4;
+    float: right;
+
+    .time{
+      float: left;
+    }
+    .reply{
+      float: right;
+    }
+  }
+}
+
+
 .new_message {
   float: left;
   width: 100%;
@@ -140,9 +169,11 @@
   }
 
   li {
-    padding: 4px 15px 15px;
+    padding: 4px 5px 15px;
     border-bottom: solid #b7babb 1px;
     .message_content{
+      padding-top: 10px;
+      padding-left: 20px;
       display: none;
     }
   }
@@ -165,18 +196,6 @@
   .hidden_message_li{
     display: none;
   }
-
-  span.conversation_name_list{
-    font-weight: bold;
-    color: #555;
-    float: left;
-    width: 100%;
-  }
-
-  span.conversation_time{
-    color: #4581c4;
-    float: right;
-  }
 }
 
 .conversation_table {
@@ -184,6 +203,11 @@
   padding: 0px;
   margin: 0px;
   border-collapse: collapse;
+
+  .utility_icons{
+    padding-right: 15px;
+    float: right;
+  }
 
   .td_left_top {
     height: 40px;
