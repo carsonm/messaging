@@ -1,6 +1,5 @@
 <% if unhide == false %>
   $('#message_li_<%= @message._id.to_s %>').remove();
 <% else %>
-  alert('unhide');
-  $('#message_content_<%= @message._id.to_s %> a:first').html() = "Hide";
+  $('.hide_link').html("Hide");
 <% end %>

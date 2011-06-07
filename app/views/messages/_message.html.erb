@@ -42,9 +42,9 @@
     <%= message.content.gsub("\n", '<br>').html_safe %>
     <br><br>
     <% if message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s) %>
-      <%= link_to 'Unhide', message, method: :delete, remote: :true %>
+      <%= link_to 'Unhide', message, method: :delete, remote: :true, :class => 'hide_link' %>
     <% else %>
-      <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true %>
+      <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true, :class => 'hide_link' %>
     <% end %>
   </div>
 </li>
