@@ -41,6 +41,10 @@
   <div id="message_content_<%= message._id.to_s %>" class="message_content">
     <%= message.content.gsub("\n", '<br>').html_safe %>
     <br><br>
-    <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true %>
+    <% if message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s) %>
+      <%= link_to 'Unhide', message, method: :delete, remote: :true %>
+    <% else %>
+      <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true %>
+    <% end %>
   </div>
 </li>

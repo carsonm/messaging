@@ -167,19 +167,22 @@ class MessagesController < ApplicationController
   # DELETE /messages/1.json
   def destroy
     @message = Message.find(params[:id])
-
-    #DO THIS ON ONE LINE
-    if @message.hidden_for != nil
+    unhide = false
+    if @message.hidden_for && @message.hidden_for.include?(CURRENT_USER.to_s)
+      @message.hidden_for.delete(CURRENT_USER.to_s)
+      unhide = true
+    elsif @message.hidden_for != nil
       @message.hidden_for << CURRENT_USER.to_s unless @message.hidden_for.include?(CURRENT_USER.to_s)
     else
       @message.hidden_for = Array.new([CURRENT_USER.to_s])
     end
+
     @message.save
 
     respond_to do |format|
       format.html { redirect_to messages_url }
       format.json { head :ok }
-      format.js { render :template => 'messages/delete' }
+      format.js { render :template => 'messages/delete', :locals => { :unhide => unhide } }
     end
   end
 end
