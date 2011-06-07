@@ -7,6 +7,7 @@ class Conversation
   field :last_from_previous_user
   field :hidden_for
   field :group_id
+  field :starred_messages_for
 
   has_many :messages
 end

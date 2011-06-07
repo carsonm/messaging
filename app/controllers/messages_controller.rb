@@ -23,7 +23,11 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
+    if params[:starred] == "true"
+      @messages = Message.where(conversation_id: params[:id]).where(:starred_for.in => [CURRENT_USER.to_s]).order_by([:created_at, :desc])
+    else
+      @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
+    end
 
     respond_to do |format|
       format.js {render :partial => "messages/conversation_thread", :layout => false, :status => :ok}
@@ -88,15 +92,14 @@ class MessagesController < ApplicationController
   end
 
   def star
-    @message = Message.find(params[:id])
-
+    message = Message.find(params[:id])
     #DO THIS ON ONE LINE
-    if @message.starred_for != nil
-      @message.starred_for << CURRENT_USER.to_s unless @message.starred_for.include?(CURRENT_USER.to_s)
+    if message.starred_for != nil
+      message.starred_for << CURRENT_USER.to_s unless message.starred_for.include?(CURRENT_USER.to_s)
     else
-      @message.starred_for = Array.new([CURRENT_USER.to_s])
+      message.starred_for = Array.new([CURRENT_USER.to_s])
     end
-    @message.save
+    message.save
 
     respond_to do |format|
       format.js { render :text => "true" }

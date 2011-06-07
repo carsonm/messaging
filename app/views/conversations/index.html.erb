@@ -4,7 +4,7 @@
       <div class='message_left_nav'>
         <a href="/conversations"><img src="/assets/messaging_inbox.png" style="vertical-align:middle;"></a>
         <br><br>
-        <img src="/assets/messaging_star.png" style="vertical-align:middle;" onclick="loadNewMessageForm('<%= new_message_path %>');">
+        <a href="/conversations?starred=true"><img src="/assets/messaging_star.png" style="vertical-align:middle;"></a>
         <br><br>
         <a href="/conversations?deleted=true"><img src="/assets/messaging_trash.png" style="vertical-align:middle;" onclick="loadNewMessageForm('<%= new_message_path %>');"></a>
         <br><br>
@@ -45,7 +45,7 @@
             conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
             conversation_names << 'me'
           %>
-          <li class='not_selected' id='conversation_li_<%= conversation._id.to_s %>' onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>');">
+          <li class='not_selected' id='conversation_li_<%= conversation._id.to_s %>' onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>', '<%= params[:starred] %>');">
             <div id="<%= conversation._id.to_s %>li_shadow_1">
             <div id="<%= conversation._id.to_s %>li_shadow_2">
             <div id="<%= conversation._id.to_s %>li_background">

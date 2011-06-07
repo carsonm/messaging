@@ -29,10 +29,14 @@ $ ->
           data: "conversation_id=" + conversation_id
         });
 
-`loadConversationThread = function(messagePath, conversationID) {
-     console.log(messagePath);
-     $('.conversation_thread').load(messagePath, function(){
-       $('.message_container ul .message_li:first .message_content').show();
+`loadConversationThread = function(messagePath, conversationID, starred) {
+     $('.conversation_thread').load(messagePath + '?starred=' + starred, function(){
+       if(starred=="true"){
+         $('.message_container ul .message_li .message_content').show();
+       }
+       else{
+         $('.message_container ul .message_li:first .message_content').show();
+       }
      });
 
      $('.conversation_container li').removeClass('selected');

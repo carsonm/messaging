@@ -5,6 +5,15 @@ class ConversationsController < ApplicationController
     if CURRENT_USER
       if params[:deleted] == "true"
         @conversations = Conversation.all_in(hidden_for: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
+      elsif params[:starred] == "true"
+        @messages = Message.all_in(starred_for: [CURRENT_USER.to_s]) #.order_by([:created_at, :desc])
+        conversation_ids = Array.new
+        @messages.each { |message| conversation_ids << message.conversation_id }
+        conversation_ids.uniq!
+        puts conversation_ids.inspect
+        @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
+        puts @conversations.length
+        #conversation_ids.each { |id| puts Conversation.find(id).inspect }
       else
         @conversations = Conversation.all_in(users: [CURRENT_USER.to_s]).not_in(hidden_for: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
       end
