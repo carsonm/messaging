@@ -12,6 +12,7 @@ Messaging::Application.routes.draw do
   match 'messages/reply' => 'messages#reply', :as => :reply
   match 'messages/star' => 'messages#star', :as => :star
   match 'messages/unstar' => 'messages#unstar', :as => :unstar
+  match 'conversations/restore' => 'conversations#restore', :as => :restore
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

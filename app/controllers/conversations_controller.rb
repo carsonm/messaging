@@ -10,10 +10,13 @@ class ConversationsController < ApplicationController
         conversation_ids = Array.new
         @messages.each { |message| conversation_ids << message.conversation_id }
         conversation_ids.uniq!
-        puts conversation_ids.inspect
         @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
-        puts @conversations.length
-        #conversation_ids.each { |id| puts Conversation.find(id).inspect }
+      elsif params[:search]
+        @messages = Message.fulltext_search(params[:search])
+        conversation_ids = Array.new
+        @messages.each { |message| conversation_ids << message.conversation_id }
+        conversation_ids.uniq!
+        @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
       else
         @conversations = Conversation.all_in(users: [CURRENT_USER.to_s]).not_in(hidden_for: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
       end
@@ -83,6 +86,21 @@ class ConversationsController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @conversation.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def restore
+    @conversation = Conversation.find(params[:conversation_id])
+
+    if @conversation.hidden_for && @conversation.hidden_for.include?(CURRENT_USER.to_s)
+      @conversation.hidden_for.delete(CURRENT_USER.to_s)
+    end
+
+    @conversation.save
+
+    respond_to do |format|
+      format.html { redirect_to conversations_url }
+      format.json { head :ok }
     end
   end
 

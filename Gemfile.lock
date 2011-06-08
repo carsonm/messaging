@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/aaw/mongoid_fulltext.git
+  revision: 85890d2cb1f9d3b2f61cc57c3e7732cc26f94b17
+  specs:
+    mongoid_fulltext (0.3.6)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -111,6 +117,7 @@ DEPENDENCIES
   coffee-script
   jquery-rails
   mongoid
+  mongoid_fulltext!
   rails (= 3.1.0.rc1)
   sass
   sqlite3

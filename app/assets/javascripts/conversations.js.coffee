@@ -18,7 +18,7 @@ $ ->
       $('.message_content').hide()
 
   $(document).bind 'keydown', (e) ->
-    if e.keyCode == 8 || e.keyCode == 46
+    if (e.keyCode == 8 || e.keyCode == 46) && !$('#message_content').is(":focus")
       conversation_id = $('.conversation_container ul .selected').attr('id').replace('conversation_li_', '')
       if confirm 'Are you sure you want to delete this message?'
         $('.conversation_container ul .selected').remove()
@@ -28,6 +28,35 @@ $ ->
           url: "/conversations/destroy",
           data: "conversation_id=" + conversation_id
         });
+
+`deleteConversation = function() {
+     if($(".conversation_container .selected").length != 0 ){
+       conversation_id = $('.conversation_container .selected').attr('id').replace('conversation_li_', '')
+       if(confirm('Are you sure you want to delete this message?')){
+          $('.conversation_container ul .selected').remove();
+          $('.message_container').remove();
+          $.ajax({
+            type: "DELETE",
+            url: "/conversations/destroy",
+            data: "conversation_id=" + conversation_id
+          });
+        }
+     }
+   };`
+
+
+`unDeleteConversation = function() {
+    if($(".conversation_container .selected").length != 0 ){
+     conversation_id = $('.conversation_container .selected').attr('id').replace('conversation_li_', '')
+      $('.conversation_container ul .selected').remove();
+      $('.message_container').remove();
+      $.ajax({
+        type: "DELETE",
+        url: "/conversations/restore",
+        data: "conversation_id=" + conversation_id
+      });
+    }
+   };`
 
 `loadConversationThread = function(messagePath, conversationID, starred) {
      $('.conversation_thread').load(messagePath + '?starred=' + starred, function(){

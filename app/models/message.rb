@@ -1,6 +1,7 @@
 class Message
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::FullTextSearch
 
   field :type
   field :user_id
@@ -11,4 +12,6 @@ class Message
 
   belongs_to :conversation
   embeds_many :labels
+
+  fulltext_search_in :full_name, :content
 end

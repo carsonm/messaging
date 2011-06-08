@@ -204,17 +204,20 @@
   margin: 0px;
   border-collapse: collapse;
 
-  .utility_icons{
-    padding-right: 15px;
-    float: right;
-  }
-
   .td_left_top {
     height: 40px;
     width: 300px;
-    vertical-align: top;
+    vertical-align: bottom;
     padding-left: 10px;
     margin: 0px;
+    font-size: 16px;
+    font-weight: 600;
+
+    div.left_top_nav{
+      float:right;
+      padding-bottom: 4px;
+      padding-right: 4px;
+    }
   }
   .td_left_nav {
     .message_left_nav {
@@ -234,6 +237,19 @@
     padding: 0px;
     margin: 0px;
   }
+
+  .td_middle_top {
+    vertical-align: middle;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+
+    .utility_icons{
+      padding-right: 15px;
+      float: right;
+    }
+  }
+
   .td_right {
     background-color: #f5f5f5;
     vertical-align: top;

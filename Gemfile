@@ -6,6 +6,7 @@ gem 'bson_ext'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
+gem 'mongoid_fulltext', :git => 'git://github.com/aaw/mongoid_fulltext.git'
 
 gem 'sqlite3'
 
