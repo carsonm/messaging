@@ -3,90 +3,6 @@
   They will automatically be included in application.css.
   You can use Sass (SCSS) here: http://sass-lang.com/
 */
-.conversation_container {
-  width: 300px;
-  border-top: solid #b7babb 1px;
-  float: left;
-  min-height: 100%;
-  padding: 0px;
-  margin: 0px;
-
-  ul {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
-    background-color: #fcfcfc;
-  }
-
-  li {
-    cursor: pointer;
-    border-bottom: solid #b7babb 1px;
-  }
-
-  .not_selected {
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .li_shadow_1 {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    background: #d5d5d5;
-  }
-
-  .li_shadow_2 {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    background: #e4e4e4;
-  }
-
-  .li_background {
-    background: #ececec;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  span.conversation_name_list{
-    font-weight: 600;
-    color: #555;
-    float: left;
-  }
-
-  span.conversation_time{
-    color: #4581c4;
-    float: right;
-  }
-}
-
-#message_header{
-  width: 100%;
-
-  #star{
-    float: left;
-    padding-right: 5px;
-  }
-
-  .conversation_name_list{
-    font-weight: bold;
-    color: #555;
-    width: 100%;
-  }
-
-  .conversation_time{
-    color: #4581c4;
-    float: right;
-
-    .time{
-      float: left;
-    }
-    .reply{
-      float: right;
-    }
-  }
-}
-
 
 .new_message {
   float: left;
@@ -146,57 +62,6 @@
   }
 }
 
-.conversation_thread {
-  float: left;
-  width: 100%;
-  height: 100%;
-  padding: 0px;
-  margin: 0px;
-
-  .message_container {
-    background-color: #fdfdfd;
-    border-top: solid #b7babb 1px;
-    border-left: solid #b7babb 1px;
-    height: 100%;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
-    background-color: #fdfdfd;
-  }
-
-  li {
-    padding: 4px 5px 15px;
-    border-bottom: solid #b7babb 1px;
-    .message_content{
-      padding-top: 10px;
-      padding-left: 20px;
-      display: none;
-    }
-  }
-  li:hover { background: #f5f5f5; }
-  .reply_form{
-    display: none;
-
-    textarea {
-        width: 98%;
-        height: 75px;
-        border: 1px solid #b7babb;
-        padding: 5px;
-        margin: 3px;
-        overflow:hidden;
-        font-family: Georgia, serif;
-        font-color: #333;
-    }
-  }
-
-  .hidden_message_li{
-    display: none;
-  }
-}
-
 .hidden{
   display: none;
 }
@@ -209,57 +74,233 @@
   margin: 0px;
   border-collapse: collapse;
 
-  .td_left_top {
-    height: 40px;
-    width: 300px;
-    vertical-align: bottom;
-    padding-left: 10px;
+  .td_main_nav {
+    width: 40px;
+    background-color: #f6f6f9;
+    vertical-align: top;
+    padding: 0px;
     margin: 0px;
-    font-size: 16px;
-    font-weight: 600;
+    border-right: 1px solid #555;
 
-    div.left_top_nav{
-      float:right;
-      padding-bottom: 4px;
-      padding-right: 4px;
-    }
-  }
-  .td_left_nav {
-    .message_left_nav {
-      width: 50px;
+    .main_nav_icons {
+      width: 40px;
       text-align: center;
       padding-top: 50px;
     }
-    width: 50px;
-    background-color: #393639;
-    vertical-align: top;
-    padding: 0px;
-    margin: 0px;
-  }
-  .td_left {
-    width: 350px;
-    vertical-align: top;
-    padding: 0px;
-    margin: 0px;
   }
 
-  .td_middle_top {
+  .td_conversation_pane_nav {
+    width: 300px;
+    padding-left: 8px;
+    margin: 0px;
+    height: 40px;
+    border-bottom: solid #333 1px;
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#777878', endColorstr='#4c4c4c'); /* for IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#777878), to(#4c4c4c)); /* for webkit browsers */
+    background: -moz-linear-gradient(top,  #777878,  #4c4c4c); /* for firefox 3.6+ */
+
+    .search_form{
+      float: left;
+      background: url(/assets/messaging_searchbox.png) top left no-repeat;
+      width: 200px;
+      height: 22px;
+
+      input {
+        background: none;
+        border: none;
+        width: 172px;
+        height: 22px;
+        padding-left: 22px;
+      }
+    }
+
+    .conversation_pane_nav_icons{
+      float:right;
+      padding-right: 4px;
+    }
+  }
+
+  .td_conversation_thread_top {
     vertical-align: middle;
     text-align: center;
     padding: 0px;
     margin: 0px;
+    height: 35px;
+    border-bottom: solid #333 1px;
+    border-left: 1px solid #333;
 
-    .utility_icons{
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#777878', endColorstr='#4c4c4c'); /* for IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#777878), to(#4c4c4c)); /* for webkit browsers */
+    background: -moz-linear-gradient(top,  #777878,  #4c4c4c); /* for firefox 3.6+ */
+
+    .conversation_thread_utility_icons{
       padding-right: 15px;
       float: right;
     }
   }
 
-  .td_right {
+  .td_conversation_list {
+    width: 350px;
+    vertical-align: top;
+    padding: 0px;
+    margin: 0px;
+
+    .conversation_container {
+      width: 300px;
+      border-top: solid #b7babb 1px;
+      float: left;
+      min-height: 100%;
+      padding: 0px;
+      margin: 0px;
+
+      ul {
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+        background-color: #fcfcfc;
+      }
+
+      li {
+        cursor: pointer;
+        border-bottom: solid #b7babb 1px;
+      }
+
+      .not_selected {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .li_shadow_1 {
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background: #d5d5d5;
+      }
+
+      .li_shadow_2 {
+        padding-top: 1px;
+        padding-bottom: 1px;
+        background: #e4e4e4;
+      }
+
+      .li_background {
+        background: #ececec;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      span.conversation_name_list{
+        font-weight: 600;
+        color: #555;
+        float: left;
+      }
+
+      span.conversation_time{
+        color: #4581c4;
+        float: right;
+      }
+    }
+  }
+
+  .td_conversation_thread {
+    background-image: url(/assets/messaging_background.png);
     background-color: #f5f5f5;
     vertical-align: top;
     width: 100%;
     padding: 0px;
     margin: 0px;
+
+    -webkit-box-shadow: inset 1px 2px 5px #555;
+    -moz-box-shadow: inset 1px 2px 5px #555;
+    box-shadow: inset 1px 2px 5px #555;
+
+    .conversation_thread {
+      float: left;
+      width: 100%;
+      height: 100%;
+      padding: 0px;
+      margin: 0px;
+
+      .message_container {
+        height: 100%;
+
+        ul {
+          list-style-type: none;
+          padding: 0px;
+          margin: 0px;
+
+          .message_header{
+            width: 100%;
+            .star{
+              float: left;
+              padding-right: 5px;
+            }
+            .conversation_name_list{
+              font-weight: bold;
+              color: #555;
+              width: 100%;
+            }
+            .conversation_time{
+              color: #4581c4;
+              float: right;
+              .time{
+                float: left;
+              }
+              .reply{
+                float: right;
+              }
+            }
+          }
+        }
+
+        li {
+          background-color: #fdfdfd;
+          padding: 4px 5px 15px;
+          margin: 15px;
+          border-bottom: solid #b7babb 1px;
+
+          -webkit-border-top-left-radius: 7px;
+          -webkit-border-top-right-radius: 7px;
+          -moz-border-radius-topleft: 7px;
+          -moz-border-radius-topright: 7px;
+          border-top-left-radius: 7px;
+          border-top-right-radius: 7px;
+
+          -moz-box-shadow: 0px 1px 3px #333;
+          -webkit-box-shadow: 0px 1px 3px #333;
+          box-shadow: 0px 1px 3px #333;
+
+          .message_content{
+            padding-top: 10px;
+            padding-left: 20px;
+            display: none;
+          }
+        }
+
+        li:hover {
+          background: #f5f5f5;
+        }
+
+        .reply_form{
+          display: none;
+
+          textarea {
+              width: 98%;
+              height: 75px;
+              border: 1px solid #b7babb;
+              padding: 5px;
+              margin: 3px;
+              overflow:hidden;
+              font-family: Georgia, serif;
+              font-color: #333;
+          }
+        }
+      }
+      .hidden_message_li{
+        display: none;
+      }
+    }
   }
 }

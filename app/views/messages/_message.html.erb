@@ -15,11 +15,8 @@
       </div>
     <% end %>
   </div>
-
-
-
-  <div id="message_header">
-    <div id="star">
+  <div class="message_header">
+    <div class="star">
       <% if message.starred_for && message.starred_for.include?(CURRENT_USER.to_s) %>
         <img src="assets/messaging_starred.png" onclick="unStarIt('<%= message._id.to_s %>');">
       <% else %>

@@ -13,5 +13,5 @@ class Message
   belongs_to :conversation
   embeds_many :labels
 
-  fulltext_search_in :full_name, :content, :ngram_width => 2
+  fulltext_search_in :full_name, :content, :ngram_width => 1
 end
