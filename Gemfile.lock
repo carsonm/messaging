@@ -50,6 +50,7 @@ GEM
     erubis (2.7.0)
     execjs (1.1.2)
       multi_json (~> 1.0)
+    fast-stemmer (1.0.0)
     hike (1.0.0)
     i18n (0.6.0)
     jquery-rails (1.0.9)
@@ -66,6 +67,10 @@ GEM
       activemodel (~> 3.0)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
+    mongoid_search (0.2.6)
+      bson_ext (~> 1.2)
+      fast-stemmer (~> 1.0.0)
+      mongoid (~> 2.0.0)
     multi_json (1.0.3)
     polyglot (0.3.1)
     rack (1.3.0)
@@ -118,6 +123,7 @@ DEPENDENCIES
   jquery-rails
   mongoid
   mongoid_fulltext!
+  mongoid_search
   rails (= 3.1.0.rc3)
   sass
   sqlite3

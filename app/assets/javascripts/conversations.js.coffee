@@ -73,7 +73,7 @@ $ ->
          $('.message_container ul .message_li:first .message_content').show();
        }
        if(searchTerm != ''){
-         $('.message_content').highlight(searchTerm);
+         $('li').highlight(searchTerm);
        }
      });
 
