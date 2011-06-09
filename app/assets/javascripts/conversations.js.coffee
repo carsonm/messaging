@@ -58,13 +58,22 @@ $ ->
     }
    };`
 
-`loadConversationThread = function(messagePath, conversationID, starred) {
-     $('.conversation_thread').load(messagePath + '?starred=' + starred, function(){
+`loadConversationThread = function(messagePath, conversationID, starred, messageIDs, searchTerm) {
+     $('.conversation_thread').load(messagePath + '?starred=' + starred + '&messageIDs=' + messageIDs, function(){
        if(starred=="true"){
          $('.message_container ul .message_li .message_content').show();
+         $('.message_content.hidden').hide();
+       }
+       else if(messageIDs.length > 0){
+         for(x in messageIDs){
+           $('#message_content_' + messageIDs[x]).show();
+         }
        }
        else{
          $('.message_container ul .message_li:first .message_content').show();
+       }
+       if(searchTerm != ''){
+         $('.message_content').highlight(searchTerm);
        }
      });
 

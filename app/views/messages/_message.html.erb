@@ -1,4 +1,4 @@
-<% if message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s) %>
+<% if (message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s)) %>
   <li id="message_li_<%= message._id.to_s %>" class="hidden_message_li">
 <% else %>
   <li id="message_li_<%= message._id.to_s %>" class="message_li">
@@ -38,13 +38,19 @@
       </div>
     </div>
   </div>
-  <div id="message_content_<%= message._id.to_s %>" class="message_content">
+  <%
+      hide_starred = ''
+      if (params[:starred] == 'true') && (!message.starred_for || !message.starred_for.include?(CURRENT_USER.to_s))
+        hide_starred = 'hidden'
+      end
+    %>
+  <div id="message_content_<%= message._id.to_s %>" class="message_content <%= hide_starred %>">
     <%= message.content.gsub("\n", '<br>').html_safe %>
     <br><br>
     <% if message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s) %>
-      <%= link_to 'Unhide', message, method: :delete, remote: :true, :class => 'hide_link' %>
+      <%= link_to 'Unhide', message, method: :delete, remote: :true, :id => 'hide_link_' + message._id.to_s %>
     <% else %>
-      <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true, :class => 'hide_link' %>
+      <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true, :id => 'hide_link_' + message._id.to_s %>
     <% end %>
   </div>
 </li>

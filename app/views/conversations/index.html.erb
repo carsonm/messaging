@@ -58,14 +58,21 @@
             conversation_names << User.find(last_message['user_id']).name.split(' ')[0] unless last_message['user_id'] == CURRENT_USER.to_s
             conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
             conversation_names << 'me'
+
+            search_hits = Array.new
+            if array_or_string_for_javascript(@message_ids)
+              search_hits = array_or_string_for_javascript(@message_ids)
+            end
+
+
           %>
-          <li class='not_selected' id='conversation_li_<%= conversation._id.to_s %>' onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>', '<%= params[:starred] %>');">
+          <li class='not_selected' id='conversation_li_<%= conversation._id.to_s %>' onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>', '<%= params[:starred] %>', <%= search_hits %>, '<%= params[:search] %>');">
             <div id="<%= conversation._id.to_s %>li_shadow_1">
             <div id="<%= conversation._id.to_s %>li_shadow_2">
             <div id="<%= conversation._id.to_s %>li_background">
               <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
               <span class='conversation_time'><%= distance_of_time_in_words(Time.now, last_message['created_at']) %></span>
-              <br><%= last_message['content'][0..140] + ((last_message['content'].length > 140) ? '...' : '') %>
+              <br><%= last_message['content'][0..80] + ((last_message['content'].length > 80) ? '...' : '') %>
             </div>
             </div>
             </div>

@@ -24,7 +24,8 @@ class MessagesController < ApplicationController
   # GET /messages/1.json
   def show
     if params[:starred] == "true"
-      @messages = Message.where(conversation_id: params[:id]).where(:starred_for.in => [CURRENT_USER.to_s]).order_by([:created_at, :desc])
+      @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
+      #@messages = Message.where(conversation_id: params[:id]).where(:starred_for.in => [CURRENT_USER.to_s]).order_by([:created_at, :desc])
     else
       @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
     end

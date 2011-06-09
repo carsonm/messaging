@@ -12,9 +12,14 @@ class ConversationsController < ApplicationController
         conversation_ids.uniq!
         @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
       elsif params[:search]
-        @messages = Message.fulltext_search(params[:search])
+        messages = Message.fulltext_search(params[:search])
         conversation_ids = Array.new
-        @messages.each { |message| conversation_ids << message.conversation_id }
+        @message_ids = Array.new
+        messages.each { |message|
+          conversation_ids << message.conversation_id
+          @message_ids << message._id.to_s
+        }
+
         conversation_ids.uniq!
         @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
       else

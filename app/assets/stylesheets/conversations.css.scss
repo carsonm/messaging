@@ -60,7 +60,6 @@
   }
 }
 
-
 #message_header{
   width: 100%;
 
@@ -197,6 +196,12 @@
     display: none;
   }
 }
+
+.hidden{
+  display: none;
+}
+
+.highlight { background-color: yellow }
 
 .conversation_table {
   height: 100%;

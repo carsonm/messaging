@@ -1,5 +1,5 @@
 <% if unhide == false %>
   $('#message_li_<%= @message._id.to_s %>').remove();
 <% else %>
-  $('.hide_link').html("Hide");
+  $('#hide_link_<%= @message._id.to_s %>').html("Hide");
 <% end %>
