@@ -13,7 +13,7 @@
     </td>
     <td class="td_conversation_pane_nav">
       <form action="/conversations" method="get" class="search_form">
-        <input type="text" name="search">
+        <input type="text" name="search" id="search_box">
       </form>
       <div class="conversation_pane_nav_icons">
         <img src="/assets/messaging_compose.png" onclick="loadNewMessageForm('<%= new_message_path %>');">
@@ -25,7 +25,9 @@
       </div>
     </td>
     <td class="td_conversation_thread_top">
-
+      <img src="assets/messaging_hidden.png" id="hidden_message" alt="Show Hidden Messages">
+      <img src="assets/messaging_expand.png" id="expand_messages">
+      <img src="assets/messaging_collapse.png" id="collapse_messages">
     </td>
   </tr>
   <tr>

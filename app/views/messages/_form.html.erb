@@ -10,20 +10,18 @@
       </ul>
     </div>
   <% end %>
-
-   <div class="to_field">
+   <div class='new_message_title'><input type='image' value='submit' src="/assets/messaging_send.png" border='0' style="vertical-align:middle; float: left; padding-left: 15px;" onclick="loadNewMessageForm('<%= new_message_path %>');">New Message<img src="/assets/messaging_attachment.png" style="vertical-align:middle; float: right; padding-right: 15px;" onclick="loadNewMessageForm('<%= new_message_path %>');"></div>
+   <div class="new_message_to_field">
     To:
     <% for user in User.all %>
       <%= check_box_tag "message[user_ids_to][]", user.id, false %>
       <%= user.name %>
     <% end %>
   </div>
-  <div class="tiny_mce_controls">
+  <div class="new_message_tiny_mce_controls">
     Tiny MCE controls go here ..... . ............................... ............ ..............
   </div>
-  <div class="content_field">
+  <div class="new_message_content_field">
     <%= f.text_area :content, :class => 'tinymce' %>
-    <br>
-    <%= f.submit %>
   </div>
 <% end %>

@@ -1,6 +1,6 @@
 html, body { background-color: #fff; color: #333; height: 100%; margin: 0px; padding: 0px;}
 
-body, p, ol{
+body {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
@@ -51,10 +51,5 @@ div.field, div.actions {
     margin-bottom: 0px;
     background-color: #c00;
     color: #fff;
-  }
-
-  ul li {
-    font-size: 12px;
-    list-style: square;
   }
 }

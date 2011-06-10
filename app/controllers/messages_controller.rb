@@ -83,7 +83,7 @@ class MessagesController < ApplicationController
       if @message.save
         conversation.last_message = @message
         conversation.save
-        format.html { redirect_to message_path(conversation), notice: 'Message was successfully created.' }
+        format.html { redirect_to '/conversations', notice: 'Message was successfully created.' }
         format.json { render json: @message, status: :created, location: @message }
       else
         format.html { render action: "new" }

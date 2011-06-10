@@ -16,7 +16,7 @@ $(function() {
     });
     return $(document).bind('keydown', function(e) {
       var conversation_id;
-      if ((e.keyCode === 8 || e.keyCode === 46) && !$('#message_content').is(":focus")) {
+      if ((e.keyCode === 8 || e.keyCode === 46) && !$('#message_content').is(":focus") && !$('#search_box').is(":focus") && !$('#content').is(":focus")) {
         conversation_id = $('.conversation_container ul .selected').attr('id').replace('conversation_li_', '');
         if (confirm('Are you sure you want to delete this message?')) {
           $('.conversation_container ul .selected').remove();
@@ -96,18 +96,22 @@ $(function() {
      });
    };;
   starIt = function(messageID) {
-     $('#message_li_' + messageID + ' #message_header #star img').attr('src', 'assets/messaging_starred.png')
-     $.ajax({
-          type: "POST",
-          url: "/messages/star",
-          data: "id=" + messageID
-        });
+     if ($('#message_li_' + messageID + ' .message_header .star img').attr("alt") === "unstarred") {
+       $('#message_li_' + messageID + ' .message_header .star img').attr('src', 'assets/messaging_starred.png')
+       $('#message_li_' + messageID + ' .message_header .star img').attr("alt", "starred");
+       $.ajax({
+            type: "POST",
+            url: "/messages/star",
+            data: "id=" + messageID
+          });
+      }
+      else{
+        $('#message_li_' + messageID + ' .message_header .star img').attr('src', 'assets/messaging_unstarred.png')
+        $('#message_li_' + messageID + ' .message_header .star img').attr("alt", "unstarred");
+        $.ajax({
+            type: "POST",
+            url: "/messages/unstar",
+            data: "id=" + messageID
+          });
+      }
    };;
-  unStarIt = function(messageID) {
-     $('#message_li_' + messageID + ' #message_header #star img').attr('src', 'assets/messaging_unstarred.png')
-     $.ajax({
-          type: "POST",
-          url: "/messages/unstar",
-          data: "id=" + messageID
-        });
-   };

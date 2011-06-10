@@ -1,4 +1,7 @@
-<div class="new_message">
-  <p class='title'><img src="/assets/messaging_send.png" style="vertical-align:middle; float: left; padding-left: 15px;" onclick="loadNewMessageForm('<%= new_message_path %>');">New Message<img src="/assets/messaging_attachment.png" style="vertical-align:middle; float: right; padding-right: 15px;" onclick="loadNewMessageForm('<%= new_message_path %>');"></p>
-  <%= render 'form' %>
+<div class="message_container">
+  <ul>
+    <li>
+      <%= render 'form' %>
+    </li>
+  </ul>
 </div>

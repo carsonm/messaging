@@ -3,6 +3,7 @@
 <% else %>
   <li id="message_li_<%= message._id.to_s %>" class="message_li">
 <% end %>
+<div class="message">
   <div id="reply_form_<%= message._id.to_s %>" class="reply_form">
     <%= form_tag(reply_path, :id => params[:id], :remote => true) do %>
       <%= hidden_field_tag 'conversation_id', params[:id] %>
@@ -18,9 +19,9 @@
   <div class="message_header">
     <div class="star">
       <% if message.starred_for && message.starred_for.include?(CURRENT_USER.to_s) %>
-        <img src="assets/messaging_starred.png" onclick="unStarIt('<%= message._id.to_s %>');">
+        <img src="assets/messaging_starred.png" onclick="starIt('<%= message._id.to_s %>');" alt="starred">
       <% else %>
-        <img src="assets/messaging_unstarred.png" onclick="starIt('<%= message._id.to_s %>');">
+        <img src="assets/messaging_unstarred.png" onclick="starIt('<%= message._id.to_s %>');" alt="unstarred">
       <% end %>
     </div>
     <div class='conversation_name_list' onclick="$('#message_content_<%= message._id.to_s %>').toggle();">
@@ -50,4 +51,5 @@
       <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true, :id => 'hide_link_' + message._id.to_s %>
     <% end %>
   </div>
+</div>
 </li>
