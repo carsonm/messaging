@@ -62,7 +62,7 @@ $(function() {
          $('.message_container ul .message_li .message_content').show();
          $('.message_content.hidden').hide();
        }
-       else if(messageIDs.length > 0){
+       else if(messageIDs.length > 0 && messageIDs[0] != ''){
          for(x in messageIDs){
            $('#message_content_' + messageIDs[x]).show();
          }
@@ -88,9 +88,6 @@ $(function() {
      $('#' + conversationID + 'li_background').toggleClass('li_background');
    };;
   loadNewMessageForm = function(messagePath) {
-     //$('.conversation_thread').load(messagePath, function(){
-     //  $('.message_container ul li:first .message_content').show();
-     //});
      $('.conversation_thread').load(messagePath, function(){
        //$('.message_container ul li:first .message_content').show();
      });

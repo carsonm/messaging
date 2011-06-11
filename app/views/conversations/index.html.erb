@@ -7,8 +7,6 @@
         <a href="/conversations?starred=true"><img src="/assets/messaging_star.png" style="vertical-align:middle;"></a>
         <br><br>
         <a href="/conversations?deleted=true"><img src="/assets/messaging_trash.png" style="vertical-align:middle;" onclick="loadNewMessageForm('<%= new_message_path %>');"></a>
-        <br><br>
-        <img src="/assets/messaging_search.png" style="vertical-align:middle;" onclick="loadNewMessageForm('<%= new_message_path %>');">
       </div>
     </td>
     <td class="td_conversation_pane_nav">
@@ -35,38 +33,14 @@
       <div class='conversation_container'>
         <ul>
           <% @conversations.each do |conversation| %>
-          <%
-            last_message = JSON.parse(conversation.last_message.to_json) unless !conversation.last_message
-            last_message_user_id = last_message['user_id'] unless !last_message
-
-            conversation_users = Array.new(conversation.users)
-            conversation_users.delete(CURRENT_USER.to_s)
-
-            if last_message_user_id == CURRENT_USER.to_s
-              last_message = JSON.parse(conversation.last_from_previous_user.to_json) unless !conversation.last_from_previous_user
-            end
-
-            if last_message
-              conversation_users.delete(last_message['user_id'])
-            end
-
-            conversation_names = Array.new
-            conversation_names << User.find(last_message['user_id']).name.split(' ')[0] unless last_message['user_id'] == CURRENT_USER.to_s
-            conversation_users.each { |user_id| conversation_names << User.find(user_id).name.split(' ')[0] }
-            conversation_names << 'me'
-
-            search_hits = Array.new
-            if array_or_string_for_javascript(@message_ids)
-              search_hits = array_or_string_for_javascript(@message_ids)
-            end
-          %>
-          <li class='not_selected' id='conversation_li_<%= conversation._id.to_s %>' onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>', '<%= params[:starred] %>', <%= search_hits %>, '<%= params[:search] %>');">
+          <li class='not_selected' id='conversation_li_<%= conversation._id.to_s %>'
+            onclick="loadConversationThread('<%= message_path(conversation) %>', '<%= conversation._id.to_s %>', '<%= params[:starred] %>', <%= array_or_string_for_javascript(@message_ids) %>, '<%= params[:search] %>');">
             <div id="<%= conversation._id.to_s %>li_shadow_1">
             <div id="<%= conversation._id.to_s %>li_shadow_2">
             <div id="<%= conversation._id.to_s %>li_background">
-              <span class='conversation_name_list'><%= conversation_names.join(', ') %></span>
-              <span class='conversation_time'><%= distance_of_time_in_words(Time.now, last_message['created_at']) %></span>
-              <br><%= last_message['content'][0..80] + ((last_message['content'].length > 80) ? '...' : '') %>
+              <span class='conversation_name_list'><%= conversation.to_list.join(', ') %></span>
+              <span class='conversation_time'><%= distance_of_time_in_words(Time.now, conversation.list_display_message['created_at']) %></span>
+              <br><%= conversation.list_display_message['content'][0..80] + ((conversation.list_display_message['content'].length > 80) ? '...' : '') %>
             </div>
             </div>
             </div>

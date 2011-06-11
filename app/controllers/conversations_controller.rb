@@ -3,23 +3,20 @@ class ConversationsController < ApplicationController
   # GET /conversations.json
   def index
     if CURRENT_USER
+      @message_ids = Array.new
       if params[:deleted] == "true"
         @conversations = Conversation.all_in(hidden_for: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
       elsif params[:starred] == "true"
-        @messages = Message.all_in(starred_for: [CURRENT_USER.to_s]) #.order_by([:created_at, :desc])
-        conversation_ids = Array.new
-        @messages.each { |message| conversation_ids << message.conversation_id }
-        conversation_ids.uniq!
+        @messages = Message.all_in(starred_for: [CURRENT_USER.to_s])
+        conversation_ids = @messages.collect { |message| message.conversation_id }.uniq!
         @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
       elsif params[:search]
         messages = Message.fulltext_search(params[:search])
         conversation_ids = Array.new
-        @message_ids = Array.new
         messages.each { |message|
           conversation_ids << message.conversation_id
           @message_ids << message._id.to_s
         }
-
         conversation_ids.uniq!
         @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
       else
@@ -96,11 +93,7 @@ class ConversationsController < ApplicationController
 
   def restore
     @conversation = Conversation.find(params[:conversation_id])
-
-    if @conversation.hidden_for && @conversation.hidden_for.include?(CURRENT_USER.to_s)
-      @conversation.hidden_for.delete(CURRENT_USER.to_s)
-    end
-
+    @conversation.hidden_for.delete(CURRENT_USER.to_s) if @conversation.hidden_for && @conversation.hidden_for.include?(CURRENT_USER.to_s)
     @conversation.save
 
     respond_to do |format|
@@ -114,12 +107,12 @@ class ConversationsController < ApplicationController
   def destroy
     @conversation = Conversation.find(params[:conversation_id])
 
-    #DO THIS ON ONE LINE
-    if @conversation.hidden_for != nil
+    unless @conversation.hidden_for
       @conversation.hidden_for << CURRENT_USER.to_s unless @conversation.hidden_for.include?(CURRENT_USER.to_s)
     else
-      @conversation.hidden_for = Array.new([CURRENT_USER.to_s])
+      @conversation.hidden_for = [CURRENT_USER.to_s]
     end
+
     @conversation.save
 
     respond_to do |format|

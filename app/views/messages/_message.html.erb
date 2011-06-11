@@ -1,55 +1,37 @@
-<% if (message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s)) %>
-  <li id="message_li_<%= message._id.to_s %>" class="hidden_message_li">
-<% else %>
-  <li id="message_li_<%= message._id.to_s %>" class="message_li">
-<% end %>
-<div class="message">
-  <div id="reply_form_<%= message._id.to_s %>" class="reply_form">
-    <%= form_tag(reply_path, :id => params[:id], :remote => true) do %>
-      <%= hidden_field_tag 'conversation_id', params[:id] %>
-      <div class="field">
-        <%= text_area_tag :content %>
-      </div>
-      <div class="actions">
-        <a href="#" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');">cancel</a>
-        <%= submit_tag 'Send' %>
-      </div>
-    <% end %>
-  </div>
-  <div class="message_header">
-    <div class="star">
-      <% if message.starred_for && message.starred_for.include?(CURRENT_USER.to_s) %>
-        <img src="assets/messaging_starred.png" onclick="starIt('<%= message._id.to_s %>');" alt="starred">
-      <% else %>
-        <img src="assets/messaging_unstarred.png" onclick="starIt('<%= message._id.to_s %>');" alt="unstarred">
+<li id="message_li_<%= message._id.to_s %>" class="<%= message.hidden %>message_li">
+  <div class="message">
+    <div id="reply_form_<%= message._id.to_s %>" class="reply_form">
+      <%= form_tag(reply_path, :id => params[:id], :remote => true) do %>
+        <%= hidden_field_tag 'conversation_id', params[:id] %>
+        <div class="field">
+          <%= text_area_tag :content %>
+        </div>
+        <div class="actions">
+          <a href="#" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');">cancel</a>
+          <%= submit_tag 'Send' %>
+        </div>
       <% end %>
     </div>
-    <div class='conversation_name_list' onclick="$('#message_content_<%= message._id.to_s %>').toggle();">
-      <% if message.user_id == CURRENT_USER.to_s %>
-        <%= message.full_name %> to <%= to_conversation_names.join(', ') %>
-      <% else %>
-        <%= message.full_name %> to me <% if to_conversation_names.count > 0 %> and <%= to_conversation_names.join(', ') %><% end %>
-      <% end %>
-      <div class='conversation_time'>
-        <div class="time"><%= distance_of_time_in_words(Time.now, message.created_at) %> &nbsp; &nbsp;</div>
-        <div class="reply"><img src="/assets/messaging_reply.png" style="vertical-align:middle;" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');"></div>
+    <div class="message_header">
+      <div class="star">
+        <img src="assets/messaging_<%= message.starred %>.png" onclick="starIt('<%= message._id.to_s %>');" alt="<%= message.starred %>">
+      </div>
+      <div class='conversation_name_list' onclick="$('#message_content_<%= message._id.to_s %>').toggle();">
+        <%= @conversation.message_to_list(message) %>
+        <div class='conversation_time'>
+          <div class="time"><%= distance_of_time_in_words(Time.now, message.created_at) %> &nbsp; &nbsp;</div>
+          <div class="reply"><img src="/assets/messaging_reply.png" style="vertical-align:middle;" onclick="$('#reply_form_<%= message._id.to_s %>').toggle('fast');"></div>
+        </div>
       </div>
     </div>
+    <div id="message_content_<%= message._id.to_s %>" class="message_content <%= message.hide_starred(params[:starred]) %>">
+      <%= message.content.gsub("\n", '<br>').html_safe %>
+      <br><br>
+      <% if message.hidden? %>
+        <%= link_to 'Unhide', message, method: :delete, remote: :true, :id => 'hide_link_' + message._id.to_s %>
+      <% else %>
+        <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true, :id => 'hide_link_' + message._id.to_s %>
+      <% end %>
+    </div>
   </div>
-  <%
-      hide_starred = ''
-      if (params[:starred] == 'true') && (!message.starred_for || !message.starred_for.include?(CURRENT_USER.to_s))
-        hide_starred = 'hidden'
-      end
-    %>
-  <div id="message_content_<%= message._id.to_s %>" class="message_content <%= hide_starred %>">
-    <%= message.content.gsub("\n", '<br>').html_safe %>
-    <br><br>
-    <% if message.hidden_for && message.hidden_for.include?(CURRENT_USER.to_s) %>
-      <%= link_to 'Unhide', message, method: :delete, remote: :true, :id => 'hide_link_' + message._id.to_s %>
-    <% else %>
-      <%= link_to 'Hide', message, confirm: 'Are you sure?', method: :delete, remote: :true, :id => 'hide_link_' + message._id.to_s %>
-    <% end %>
-  </div>
-</div>
 </li>

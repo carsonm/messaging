@@ -25,7 +25,6 @@ class MessagesController < ApplicationController
   def show
     if params[:starred] == "true"
       @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
-      #@messages = Message.where(conversation_id: params[:id]).where(:starred_for.in => [CURRENT_USER.to_s]).order_by([:created_at, :desc])
     else
       @messages = Message.where(conversation_id: params[:id]).order_by([:created_at, :desc])
     end
@@ -57,8 +56,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    user_ids = params[:message][:user_ids_to]
-    user_ids << CURRENT_USER.to_s
+    user_ids = params[:message][:user_ids_to] + [CURRENT_USER.to_s]
 
     conversations = Conversation.where(:users.size => user_ids.count, :users.all => user_ids)
 
@@ -67,10 +65,7 @@ class MessagesController < ApplicationController
       conversation.users = user_ids
     else
       conversation = conversations[0]
-      last_message_user_id = JSON.parse(conversation.last_message.to_json)['user_id']
-      if last_message_user_id != CURRENT_USER.to_s
-        conversation.last_from_previous_user = conversation.last_message
-      end
+      conversation.last_from_previous_user = conversation.last_message unless conversation.last_message['user_id'] == CURRENT_USER.to_s
     end
 
     @message = conversation.messages.new
@@ -94,11 +89,10 @@ class MessagesController < ApplicationController
 
   def star
     message = Message.find(params[:id])
-    #DO THIS ON ONE LINE
-    if message.starred_for != nil
+    unless message.starred_for
       message.starred_for << CURRENT_USER.to_s unless message.starred_for.include?(CURRENT_USER.to_s)
     else
-      message.starred_for = Array.new([CURRENT_USER.to_s])
+      message.starred_for = [CURRENT_USER.to_s]
     end
     message.save
 
@@ -108,13 +102,11 @@ class MessagesController < ApplicationController
   end
 
   def unstar
-    @message = Message.find(params[:id])
-
-    if @message.starred_for && @message.starred_for.include?(CURRENT_USER.to_s)
-      @message.starred_for.delete(CURRENT_USER.to_s)
+    message = Message.find(params[:id])
+    if message.starred_for && message.starred_for.include?(CURRENT_USER.to_s)
+      message.starred_for.delete(CURRENT_USER.to_s)
     end
-
-    @message.save
+    message.save
 
     respond_to do |format|
       format.js { render :text => "true" }
@@ -123,12 +115,7 @@ class MessagesController < ApplicationController
 
   def reply
     conversation = Conversation.find(params[:conversation_id])
-
-    last_message_user_id = JSON.parse(conversation.last_message.to_json)['user_id']
-    if last_message_user_id != CURRENT_USER.to_s
-      conversation.last_from_previous_user = conversation.last_message
-    end
-
+    conversation.last_from_previous_user = conversation.last_message unless conversation.last_message['user_id'] == CURRENT_USER.to_s
 
     @message = conversation.messages.new
     @message.type = "message"
@@ -169,13 +156,13 @@ class MessagesController < ApplicationController
   def destroy
     @message = Message.find(params[:id])
     unhide = false
-    if @message.hidden_for && @message.hidden_for.include?(CURRENT_USER.to_s)
+    if @message.hidden?
       @message.hidden_for.delete(CURRENT_USER.to_s)
       unhide = true
     elsif @message.hidden_for != nil
       @message.hidden_for << CURRENT_USER.to_s unless @message.hidden_for.include?(CURRENT_USER.to_s)
     else
-      @message.hidden_for = Array.new([CURRENT_USER.to_s])
+      @message.hidden_for = [CURRENT_USER.to_s]
     end
 
     @message.save
