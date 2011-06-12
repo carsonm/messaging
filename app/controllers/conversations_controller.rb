@@ -8,7 +8,7 @@ class ConversationsController < ApplicationController
         @conversations = Conversation.all_in(hidden_for: [CURRENT_USER.to_s]).order_by([:last_message, :desc])
       elsif params[:starred] == "true"
         @messages = Message.all_in(starred_for: [CURRENT_USER.to_s])
-        conversation_ids = @messages.collect { |message| message.conversation_id }.uniq!
+        conversation_ids = @messages.collect { |message| message.conversation_id }.uniq
         @conversations = Conversation.where(:_id.in => conversation_ids).order_by([:last_message, :desc])
       elsif params[:search]
         messages = Message.fulltext_search(params[:search])
