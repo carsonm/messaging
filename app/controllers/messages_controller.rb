@@ -31,9 +31,6 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.js {render :partial => "messages/conversation_thread", :layout => false, :status => :ok}
-      #if request.xhr?
-      #format.js {render :partial => "messages/conversation_thread", :layout => false, :status => "200 OK"}
-      #end
     end
   end
 

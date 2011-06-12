@@ -1,4 +1,4 @@
-class Label
+class MessageLabel
   include Mongoid::Document
   include Mongoid::Timestamps
 

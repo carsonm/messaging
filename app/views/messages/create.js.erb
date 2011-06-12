@@ -1,7 +1,0 @@
- <%
-  @conversation = Conversation.find(@message.conversation_id.to_s)
-%>
-$('.reply_form').hide();
-$('.message_content').hide();
-$('.message_container ul').prepend("<%= escape_javascript(render(:partial => 'messages/message', :locals => {:message => @message })) %>");
-$('#message_content_<%= @message._id.to_s %>').show();

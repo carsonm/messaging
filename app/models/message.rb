@@ -11,9 +11,9 @@ class Message
   field :hidden_for
 
   belongs_to :conversation
-  embeds_many :labels
+  embeds_many :message_labels
 
-  fulltext_search_in :full_name, :content, :ngram_width => 1
+  fulltext_search_in :full_name, :content, :ngram_width => 0
 
   def starred
     self.starred_for && self.starred_for.include?(CURRENT_USER.to_s) ? "starred" : "unstarred"
